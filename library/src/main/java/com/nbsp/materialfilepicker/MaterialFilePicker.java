@@ -30,7 +30,6 @@ public class MaterialFilePicker {
     private String mRootPath;
     private String mCurrentPath;
     private Boolean mShowHidden = false;
-    private Boolean mCloseable = true;
     private boolean mChooseFolderMode = false;
     private CharSequence mTitle;
 
@@ -135,16 +134,8 @@ public class MaterialFilePicker {
         return this;
     }
 
-    /**
-     * Show or hide close menu in picker
-     */
-    public MaterialFilePicker withCloseMenu(boolean closeable) {
-        mCloseable = closeable;
-        return this;
-    }
-
     public MaterialFilePicker withChooseFolderMode(boolean enabled) {
-        mChooseFolderMode = true;
+        mChooseFolderMode = enabled;
         return this;
     }
 
@@ -193,7 +184,6 @@ public class MaterialFilePicker {
 
         Intent intent = new Intent(activity, mFilePickerClass);
         intent.putExtra(FilePickerActivity.ARG_FILTER, filter);
-        intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
 
         if (mRootPath != null) {
             intent.putExtra(FilePickerActivity.ARG_START_PATH, mRootPath);

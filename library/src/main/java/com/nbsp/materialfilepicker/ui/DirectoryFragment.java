@@ -72,7 +72,6 @@ public class DirectoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_directory, container, false);
         mDirectoryRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.directory_recycler_view);
         mEmptyView = view.findViewById(R.id.directory_empty_view);
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab_select_folder);
 
         return view;
     }
@@ -82,7 +81,6 @@ public class DirectoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initArgs();
         initFilesList();
-        setupFab();
     }
 
     public void setupFab() {

@@ -33,7 +33,6 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_CURRENT_PATH = "arg_current_path";
 
     public static final String ARG_FILTER = "arg_filter";
-    public static final String ARG_CLOSEABLE = "arg_closeable";
     public static final String ARG_TITLE = "arg_title";
     public static final String ARG_CHOOSE_FOLDER_MODE = "arg_folder_mode";
 
@@ -46,8 +45,6 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     private String mCurrentPath = mStartPath;
     private CharSequence mTitle;
-
-    private Boolean mCloseable;
 
     private CompositeFilter mFilter;
     private boolean mChooseFolderMode;
@@ -99,10 +96,6 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         if (getIntent().hasExtra(ARG_TITLE)) {
             mTitle = getIntent().getCharSequenceExtra(ARG_TITLE);
-        }
-
-        if (getIntent().hasExtra(ARG_CLOSEABLE)) {
-            mCloseable = getIntent().getBooleanExtra(ARG_CLOSEABLE, true);
         }
 
         mChooseFolderMode = getIntent().getBooleanExtra(ARG_CHOOSE_FOLDER_MODE, false);
@@ -178,8 +171,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void addFragmentToBackStack(String path) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(
-                        path, mFilter, mChooseFolderMode))
+                .replace(R.id.container, DirectoryFragment.getInstance(path, mFilter, mChooseFolderMode))
                 .addToBackStack(null)
                 .commit();
     }
@@ -187,7 +179,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        menu.findItem(R.id.action_close).setVisible(mCloseable);
+        menu.findItem(R.id.action_select).setVisible(mChooseFolderMode);
         return true;
     }
 
@@ -195,8 +187,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
             onBackPressed();
-        } else if (menuItem.getItemId() == R.id.action_close) {
-            finish();
+        } else if (menuItem.getItemId() == R.id.action_select) {
+            onFileClicked(new File(mCurrentPath));
         }
         return super.onOptionsItemSelected(menuItem);
     }

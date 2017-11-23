@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openFilePicker() {
         new MaterialFilePicker()
+                .withChooseFolderMode(true)
                 .withActivity(this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .withHiddenFiles(true)
